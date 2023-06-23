@@ -21,9 +21,11 @@ public class UserController {
     }
 
     @GetMapping
-    public ModelAndView getAllUsers() {
-         List<User> list = this.userService.getAllUsers();
-         return new ModelAndView("user","user", list);
+    public String getAllUsers(Model model) {
+        User user = new User();
+         model.addAttribute("user", userService.getAllUsers());
+         model.addAttribute("user", user);
+         return "user";
     }
 
     @GetMapping("/{id}")
@@ -33,20 +35,20 @@ public class UserController {
     }
 
     @PostMapping
-    public String addUser(@ModelAttribute User user) {
-        this.userService.addUser(user);
+    public String addUser(@ModelAttribute("user") User user) {
+        userService.addUser(user);
         return "redirect:/user";
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") int id){
-        this.userService.deleteUser(id);
+        userService.deleteUser(id);
         return "redirect:/user";
     }
 
     @DeleteMapping
     public String deleteAllUsers() {
-        this.userService.deleteAllUsers();
+        userService.deleteAllUsers();
         return "redirect:/user";
     }
 
