@@ -5,6 +5,7 @@ import com.practice.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -20,28 +21,33 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return this.userService.getAllUsers();
+    public ModelAndView getAllUsers() {
+         List<User> list = this.userService.getAllUsers();
+         return new ModelAndView("user","user", list);
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable("id") int id) {
-        return userService.getUserById(id);
+    public String getUser(@PathVariable("id") int id) {
+        userService.getUserById(id);
+        return "user";
     }
 
     @PostMapping
-    public User addUser(@RequestBody User user) {
-        return this.userService.addUser(user);
+    public String addUser(@ModelAttribute User user) {
+        this.userService.addUser(user);
+        return "redirect:/user";
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable("id") int id){
+    public String deleteUser(@PathVariable("id") int id){
         this.userService.deleteUser(id);
+        return "redirect:/user";
     }
 
     @DeleteMapping
-    public void deleteAllUsers() {
+    public String deleteAllUsers() {
         this.userService.deleteAllUsers();
+        return "redirect:/user";
     }
 
 }
