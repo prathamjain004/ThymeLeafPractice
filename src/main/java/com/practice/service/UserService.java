@@ -34,7 +34,7 @@ public class UserService {
         users.stream().filter(e->e.getId()!=id).collect(Collectors.toList());
     }
 
-    public void deleteAllUsers() {
-        users.clear();
-    }
+//    public void deleteAllUsers() {
+//        users.clear();
+//    }
 }
