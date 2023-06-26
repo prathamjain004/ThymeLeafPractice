@@ -21,22 +21,21 @@ public class UserController {
     }
 
     @GetMapping
-    public String getAllUsers(Model model) {
-        User user = new User();
-         model.addAttribute("user", userService.getAllUsers());
+    public String getAllUsers(Model model, User user) {
+         model.addAttribute("users", userService.getAllUsers());
          model.addAttribute("user", user);
          return "user";
     }
 
-    @GetMapping("/{id}")
-    public String getUser(@PathVariable("id") int id) {
-        userService.getUserById(id);
-        return "user";
-    }
+//    @GetMapping("/{id}")
+//    public String getUser(@PathVariable("id") int id) {
+//        userService.getUserById(id);
+//        return "user";
+//    }
 
     @PostMapping
     public String addUser(@ModelAttribute("user") User user) {
-        userService.addUser(user);
+        userService.addUser(user.getName(), user.getEmail(), user.getPhone());
         return "redirect:/user";
     }
 
@@ -46,10 +45,10 @@ public class UserController {
         return "redirect:/user";
     }
 
-    @DeleteMapping
-    public String deleteAllUsers() {
-        userService.deleteAllUsers();
-        return "redirect:/user";
-    }
+//    @DeleteMapping
+//    public String deleteAllUsers() {
+//        userService.deleteAllUsers();
+//        return "redirect:/user";
+//    }
 
 }

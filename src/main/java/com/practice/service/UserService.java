@@ -6,38 +6,37 @@ import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService {
     private static List<User> users = new ArrayList<>();
 
-    private static int usersCount = 0;
-
-    static {
-        users.add(new User(++usersCount, "Pratham", "prathamjain@gmail.com", 9876543210L));
-    }
-
     public List<User> getAllUsers() {
         return users;
     }
 
-    public User getUserById(int id) {
-        User user = null;
-        user = users.stream().filter(e->e.getId()==id).findFirst().get();
-        return user;
-    }
+    private static int todosCount = 0;
 
-    public User addUser(User user) {
+//    public User getUserById(int id) {
+//        User user = null;
+//        user = users.stream().filter(e->e.getId()==id).findFirst().get();
+//        return user;
+//    }
+
+    public User addUser(String name, String email, Long phone) {
+        User user = new User(++todosCount, name, email, phone);
         users.add(user);
         return user;
     }
 
     public void deleteUser(int id) {
-        users.stream().filter(e->e.getId()!=id).collect(Collectors.toList());
+        Predicate<? super User> predicate = user -> user.getId() == id;
+        users.removeIf(predicate);
     }
 
-    public void deleteAllUsers() {
-        users.clear();
-    }
+//    public void deleteAllUsers() {
+//        users.clear();
+//    }
 }
