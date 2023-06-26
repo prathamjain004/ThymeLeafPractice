@@ -35,7 +35,7 @@ public class UserController {
 
     @PostMapping
     public String addUser(@ModelAttribute("user") User user) {
-        userService.addUser(user.getName(), user.getEmail(), user.getPhone());
+        userService.addUser(user);
         return "redirect:/user";
     }
 

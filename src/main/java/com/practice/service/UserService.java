@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,7 +16,7 @@ public class UserService {
         return users;
     }
 
-    private static int todosCount = 0;
+    private static int usersCount = 0;
 
 //    public User getUserById(int id) {
 //        User user = null;
@@ -25,18 +24,17 @@ public class UserService {
 //        return user;
 //    }
 
-    public User addUser(String name, String email, Long phone) {
-        User user = new User(++todosCount, name, email, phone);
+    public User addUser(User user) {
+        user.setId(++usersCount);
         users.add(user);
         return user;
     }
 
     public void deleteUser(int id) {
-        Predicate<? super User> predicate = user -> user.getId() == id;
-        users.removeIf(predicate);
+        users.stream().filter(e->e.getId()!=id).collect(Collectors.toList());
     }
 
-//    public void deleteAllUsers() {
-//        users.clear();
-//    }
+    public void deleteAllUsers() {
+        users.clear();
+    }
 }
