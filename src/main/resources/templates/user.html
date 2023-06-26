@@ -11,7 +11,7 @@
 <div align="center">
     <h1>Add User</h1>
     <br />
-    <form th:action="@{/user}" th:object="${user}" method="POST">
+    <form th:action="@{/user}" th:object="${user}" method="post">
         <table border="0" cellpadding="10">
             <tr>
                 <td>Name:</td>
@@ -27,12 +27,6 @@
             </tr>
             <tr>
                 <td colspan="2"><input type="submit" value="Add User" class="btn btn-primary"/></td>
-<!--                <td colspan="2"><input type="button" value="Clear" class="btn btn-warning" id="btnClear" onclick="clear()" />-->
-<!--                    <script type="text/javascript">-->
-<!--                        function clear() {-->
-<!--                            window.location = "[[@{/}]]";-->
-<!--                        }-->
-<!--                    </script></td>-->
             </tr>
         </table>
     </form>
@@ -50,9 +44,12 @@
             <tr th:each="user : ${users}">
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.name}"></td>
-                <td th:text="${user.email}"></td>
                 <td th:text="${user.phone}"></td>
-                <td colspan="2"><a th:href="@{/user/{id}(id=${user.id})}" class="btn btn-warning">Delete</a></td>
+                <td th:text="${user.email}"></td>
+                <td colspan="2"> <form action="#" th:action="@{'/user/{id}'(id=${user.id})}" th:method="delete" >
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit" class="btn btn-warning">Delete</button>
+                </form></td>
             </tr>
      </tbody>
     </table>
