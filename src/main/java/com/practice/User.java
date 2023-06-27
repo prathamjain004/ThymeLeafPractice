@@ -1,14 +1,24 @@
 package com.practice;
 
+import jakarta.validation.constraints.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "User Details")
 public class User {
     @Id
     private int id;
+    @NotEmpty(message = "Name is required")
+    @Indexed(unique = true)
     private String name;
+    @NotEmpty(message = "Email is required")
+    @Email(message = "Invalid email format")
+    @Indexed(unique = true)
     private String email;
+    @NotNull(message = "Phone number is required")
+    @Digits(integer = 15, fraction = 0, message = "Invalid phone number")
+    @Indexed(unique = true)
     private Long phone;
 
     public User(int id, String name, String email, Long phone) {

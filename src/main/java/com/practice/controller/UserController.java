@@ -2,8 +2,10 @@ package com.practice.controller;
 
 import com.practice.User;
 import com.practice.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/user")
+@Validated
 public class UserController {
 
     private UserService userService;
@@ -30,7 +33,7 @@ public class UserController {
 
 
     @PostMapping
-    public String addUser(@ModelAttribute("user") User user) {
+    public String addUser(@Valid @ModelAttribute("user") User user) {
         userService.addUser(user);
         return "redirect:/user";
     }

@@ -15,15 +15,15 @@
         <table border="0" cellpadding="10">
             <tr>
                 <td>Name:</td>
-                <td><input type="text" name="name" th:field="*{name}" placeholder="Enter Name" class="form-control"/></td>
+                <td><input type="text" name="name" th:error="*{name}" placeholder="Enter Name" class="form-control"/></td>
             </tr>
             <tr>
                 <td>Phone:</td>
-                <td><input type="number" name="phone" th:field="*{phone}" placeholder="Enter Phone" class="form-control"/></td>
+                <td><input type="number" name="phone" th:error="*{phone}" placeholder="Enter Phone" class="form-control"/></td>
             </tr>
             <tr>
                 <td>Email:</td>
-                <td><input type="email" name="email" th:field="*{email}" placeholder="Enter Email" class="form-control"/></td>
+                <td><input type="email" name="email" th:error="*{email}" placeholder="Enter Email" class="form-control"/></td>
             </tr>
             <tr>
                 <td colspan="2"><input type="submit" value="Add User" class="btn btn-primary"/></td>
