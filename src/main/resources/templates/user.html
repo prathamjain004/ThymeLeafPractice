@@ -11,19 +11,31 @@
 <div align="center">
     <h1>Add User</h1>
     <br />
-    <form th:action="@{/user}" th:object="${user}" method="post">
+    <form th:action="@{/user}" th:object="${user}" method="post" modelAttribute="user">
         <table border="0" cellpadding="10">
             <tr>
                 <td>Name:</td>
-                <td><input type="text" name="name" th:field="*{name}" placeholder="Enter Name" class="form-control"/></td>
+                <td><label>
+                    <input type="text" name="name" th:field="*{name}" required="required" placeholder="Enter Name" class="form-control"/>
+                </label>
+                    <small th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></small>
+                </td>
             </tr>
             <tr>
                 <td>Phone:</td>
-                <td><input type="number" name="phone" th:field="*{phone}" placeholder="Enter Phone" class="form-control"/></td>
+                <td><label>
+                    <input type="number" name="phone" th:field="*{phone}" required="required" placeholder="Enter Phone" class="form-control"/>
+                </label>
+                    <small th:if="${#fields.hasErrors('phone')}" class="text-danger" th:errors="*{phone}"></small>
+                </td>
             </tr>
             <tr>
                 <td>Email:</td>
-                <td><input type="email" name="email" th:field="*{email}" placeholder="Enter Email" class="form-control"/></td>
+                <td><label>
+                    <input type="email" name="email" th:field="*{email}" required="required" placeholder="Enter Email" class="form-control"/>
+                </label>
+                    <small th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></small>
+                </td>
             </tr>
             <tr>
                 <td colspan="2"><input type="submit" value="Add User" class="btn btn-primary"/></td>
