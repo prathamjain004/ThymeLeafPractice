@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Objects;
+
 @Document(collection = "User Details")
 public class User {
     @Id
@@ -18,6 +20,7 @@ public class User {
     private String email;
     @NotNull(message = "Phone number is required")
     @Digits(integer = 15, fraction = 0, message = "Invalid phone number")
+    @Min(value = 9, message = "At least 9 Numbers required")
     @Indexed(unique = true)
     private Long phone;
 
@@ -71,5 +74,18 @@ public class User {
                 ", email='" + email + '\'' +
                 ", phone=" + phone +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User other = (User) obj;
+        return Objects.equals(email, other.email) && Objects.equals(phone, other.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, phone);
     }
 }
