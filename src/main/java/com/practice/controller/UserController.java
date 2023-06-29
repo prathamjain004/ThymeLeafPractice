@@ -8,49 +8,49 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.web.client.RestTemplate;
 @Controller
 @RequestMapping("/user")
 @Validated
 public class UserController {
 
     private UserService userService;
+    private RestTemplate restTemplate;
 
-    public UserController(UserService userService) {
-        super();
+    public UserController(UserService userService, RestTemplate restTemplate) {
         this.userService = userService;
+        this.restTemplate = restTemplate;
     }
 
     @GetMapping
     public String getAllUsers(Model model) {
          User user = new User();
          model.addAttribute("user", user);
-        List<User> userList = userService.getAllUsers();
-        List<User> uniqueUsers = userList.stream().distinct()
-                .collect(Collectors.toList());
-        model.addAttribute("users", uniqueUsers);
+        model.addAttribute("users", userService.getAllUsers());
+
          return "user";
     }
 
 
     @PostMapping
-    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
-//        if (result.hasErrors()) {
-//            FieldError fieldError = result.getFieldErrors().get(0);
-//            String errorMessage = fieldError.getDefaultMessage();
-//            model.addAttribute("errorMessage", errorMessage);
-//            return "user";
-//        }
-//        try {
+    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "/user";
+        }
+        if (userService.isEmailExists(user.getEmail())) {
+            result.rejectValue("email", "error.email", "Email already exists");
+            return "/user";
+        }
+
+        if (userService.isPhoneExists(user.getPhone())) {
+            result.rejectValue("phone", "error.phone", "Phone number already exists");
+            return "/user";
+        }
             userService.addUser(user);
+        String receiverUrl = "http://localhost:5000/notification";
+        restTemplate.postForObject(receiverUrl, user, User.class);
             return "redirect:/user";
-//        } catch (DuplicateUserException ex) {
-//            model.addAttribute("phone", ex.getMessage());
-//            return "/user";
-//        }
     }
 
     @DeleteMapping("/{id}")

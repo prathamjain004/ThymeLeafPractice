@@ -18,10 +18,7 @@
                 <td><label>
                     <input type="text" name="name" th:field="*{name}" required="required" placeholder="Enter Name" class="form-control"/>
                 </label>
-<!--                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>-->
-<!--                    <div th:if="${errorMessage}" class="error">-->
-<!--                        <span th:text="${errorMessage}"></span>-->
-<!--                    </div>-->
+                    <small th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></small>
                 </td>
             </tr>
             <tr>
@@ -29,10 +26,7 @@
                 <td><label>
                     <input type="number" name="phone" th:field="*{phone}" required="required" placeholder="Enter Phone" class="form-control"/>
                 </label>
-<!--                    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error"></span>-->
-<!--                    <div th:if="${errorMessage}" class="error">-->
-<!--                        <span th:text="${errorMessage}"></span>-->
-<!--                    </div>-->
+                    <small th:if="${#fields.hasErrors('phone')}" class="text-danger" th:errors="*{phone}"></small>
                 </td>
             </tr>
             <tr>
@@ -40,10 +34,7 @@
                 <td><label>
                     <input type="email" name="email" th:field="*{email}" required="required" placeholder="Enter Email" class="form-control"/>
                 </label>
-<!--                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>-->
-<!--                    <div th:if="${errorMessage}" class="error">-->
-<!--                        <span th:text="${errorMessage}"></span>-->
-<!--                    </div>-->
+                    <small th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></small>
                 </td>
             </tr>
             <tr>

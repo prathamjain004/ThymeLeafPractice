@@ -24,17 +24,28 @@ public class UserService {
     private static int usersCount = 0;
 
     public User addUser(User user) {
-//        try {
+        if (isEmailExists(user.getEmail())) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+
+        if (isPhoneExists(user.getPhone())) {
+            throw new IllegalArgumentException("Phone number already exists");
+        }
         user.setId(++usersCount);
         userRepository.save(user);
         return user;
-//        } catch (DataIntegrityViolationException ex) {
-//            throw new DuplicateUserException("User with the same email or phone number already exists.");
-//        }
     }
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public boolean isEmailExists(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public boolean isPhoneExists(Long phone) {
+        return userRepository.existsByPhone(phone);
     }
 
 }
